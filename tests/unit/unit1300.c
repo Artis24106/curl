@@ -215,6 +215,22 @@ UNITTEST_START
   fail_unless(llist.tail == NULL,
               "llist tail is not NULL while the llist is empty");
 
+  /**
+   * case 5:
+   * removing head with head is NULL
+   * @assumptions:
+   * 1: list size will be 0
+   * 2: list head will be null
+   * 3: list tail will be null
+   */
+  
+  to_remove = llist.head;
+  Curl_llist_remove(&llist, to_remove, NULL);
+  fail_unless(llist.head == NULL,
+              "llist head is not NULL while the llist is empty");
+  fail_unless(llist.tail == NULL,
+              "llist tail is not NULL while the llist is empty");
+              
   Curl_llist_destroy(&llist, NULL);
   Curl_llist_destroy(&llist_destination, NULL);
 }
