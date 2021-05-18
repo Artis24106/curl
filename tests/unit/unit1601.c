@@ -38,9 +38,11 @@ UNITTEST_START
 #ifndef CURL_DISABLE_CRYPTO_AUTH
   const char string1[] = "1";
   const char string2[] = "hello-you-fool";
+  const char string3[] = "I-thought-I-found-a-7th-dog,-but-it-was-actually-just-the-3rd-dog.I-thought-I-found-a-7th-dog,-but-it-was-actually-just-the-3rd-dog.I-thought-I-found-a-7th-dog,-but-it-was-actually-just-the-3rd-dog.I-thought-I-found-a-7th-dog,-but-it-was-actually-just-the-3rd-dog.I-thought-I-found-a-7th-dog,-but-it-was-actually-just-the-3rd-dog.I-thought-I-found-a-7th-dog,-but-it-was-actually-just-the-3rd-dog.I-thought-I-found-a-7th-dog,-but-it-was-actually-just-the-3rd-dog.I-thought-I-found-a-7th-dog,-but-it-was-actually-just-the-3rd-dog.I-thought-I-found-a-7th-dog,-but-it-was-actually-just-the-3rd-dog.I-thought-I-found-a-7th-dog,-but-it-was-actually-just-the-3rd-dog.";
   unsigned char output[MD5_DIGEST_LEN];
   unsigned char *testp = output;
 
+  /* 1F, 2F, 4F, 5F */
   Curl_md5it(output, (const unsigned char *) string1, strlen(string1));
 
   verify_memory(testp, "\xc4\xca\x42\x38\xa0\xb9\x23\x82\x0d\xcc\x50\x9a\x6f"
@@ -50,6 +52,13 @@ UNITTEST_START
 
   verify_memory(testp, "\x88\x67\x0b\x6d\x5d\x74\x2f\xad\xa5\xcd\xf9\xb6\x82"
                 "\x87\x5f\x22", MD5_DIGEST_LEN);
+
+  /* case3: 4T */
+  Curl_md5it(output, (const unsigned char *) string3, strlen(string3));
+
+  verify_memory(testp, "\x54\x99\x8b\x0c\xee\xfa\x94\xe6\x71\xa1\xb8\x7f\xb7"
+                "\xf3\x0f\x37", MD5_DIGEST_LEN);
+
 #endif
 
 
